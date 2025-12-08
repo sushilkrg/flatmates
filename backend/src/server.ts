@@ -5,8 +5,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import authRoutes from "./routes/auth.routes";
+import listingRoutes from "./routes/listing.routes";
 import connectDB from "./config/db";
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 const app = express();
 
 app.use(
@@ -24,6 +30,7 @@ connectDB();
 
 // routes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/listing", listingRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
