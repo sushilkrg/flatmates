@@ -9,6 +9,8 @@ import listingRoutes from "./routes/listing.routes";
 import transactionRoutes from "./routes/transaction.routes";
 import connectDB from "./config/db";
 import { stripeWebhook } from "./controllers/transaction.controller";
+import { apiLimiter } from "./middlewares/rateLimiter";
+// import { apiLimiter } from "./middlewares/rateLimiter";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,10 +19,15 @@ cloudinary.config({
 });
 const app = express();
 
+app.set("trust proxy", 1);
+
+// Global IP based rate limiter
+app.use(apiLimiter);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL, // your Next.js frontend
-    credentials: true, // allow cookies to be sent
+    origin: process.env.FRONTEND_URL,
+    credentials: true, 
   })
 );
 
