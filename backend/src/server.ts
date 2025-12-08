@@ -6,7 +6,9 @@ import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 import authRoutes from "./routes/auth.routes";
 import listingRoutes from "./routes/listing.routes";
+import transactionRoutes from "./routes/transaction.routes";
 import connectDB from "./config/db";
+import { stripeWebhook } from "./controllers/transaction.controller";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -22,6 +24,8 @@ app.use(
   })
 );
 
+app.post("/webhook", express.raw({ type: "application/json" }), stripeWebhook);
+
 app.use(cookieParser());
 app.use(express.json({ limit: "200mb" }));
 app.use(express.urlencoded({ extended: true, limit: "200mb" }));
@@ -31,6 +35,7 @@ connectDB();
 // routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/listing", listingRoutes);
+app.use("/api/v1/transaction", transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
