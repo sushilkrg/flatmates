@@ -46,5 +46,24 @@ const listingSchema = new Schema<IListing>(
   { timestamps: true }
 );
 
+// 1. General sorting (most queries)
+listingSchema.index({ createdAt: -1 });
+
+// 2. Featured only (sparse = only indexes featured=true documents)
+listingSchema.index({ isFeatured: -1, createdAt: -1 }, { sparse: true });
+
+// 3. City search
+listingSchema.index({ cityName: 1, createdAt: -1 });
+
+// 4. Location search
+listingSchema.index({ location: 1, createdAt: -1 });
+
+// 5. Filter combinations
+listingSchema.index({
+  accommodationType: 1,
+  lookingForGender: 1,
+  createdAt: -1,
+});
+
 const Listing = model<IListing>("Listing", listingSchema);
 export default Listing;
