@@ -45,6 +45,26 @@ Flatmates is a platform that lets users search and list flatmates/roommates acro
 | Other    | JWT, bcrypt, react‑hot‑toast, Cloudinary (for images)   |
 
 ---
+## Screenshots
+
+<img width="1900" height="5555" alt="flatmatess-screenshot" src="https://github.com/user-attachments/assets/ca9a0444-e7c8-4d4d-8b9b-e54e72ef9dcc" />
+
+
+<img width="1900" height="2600" alt="flatmatess-screenshot2" src="https://github.com/user-attachments/assets/f680bdcb-55c4-490f-be28-d466c0bc7107" />
+
+
+<img width="1900" height="1578" alt="flatmatess-screenshot3" src="https://github.com/user-attachments/assets/04177db4-e71f-4869-b56d-c9828b1f7a5c" />
+
+
+<img width="1900" height="2205" alt="flatmatess-screenshot4" src="https://github.com/user-attachments/assets/08c0d871-d70d-42f3-bd66-931ac97bca00" />
+
+
+<img width="1900" height="2038" alt="flatmatess-screenshot5" src="https://github.com/user-attachments/assets/f110232b-05cd-42ee-ade2-1f9f7a4186cc" />
+
+
+<img width="1900" height="1653" alt="flatmatess-screenshot6" src="https://github.com/user-attachments/assets/a5217628-0bf3-49b1-b6aa-b51f41a6412c" />
+
+---
 
 ## 📁 Project Structure
  ```
