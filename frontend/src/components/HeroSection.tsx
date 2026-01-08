@@ -1,5 +1,6 @@
 import React from "react";
 import { Search, Users, Home, Shield, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -46,16 +47,22 @@ const HeroSection = () => {
 
         {/* Premium CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mb-20">
-          <button className="group relative px-8 py-4 bg-linear-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-2xl shadow-2xl shadow-teal-500/30 hover:shadow-teal-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 overflow-hidden">
+          <Link
+            href={"/search"}
+            className="group relative px-8 py-4 bg-linear-to-r from-teal-500 to-emerald-500 text-white font-semibold rounded-2xl shadow-2xl shadow-teal-500/30 hover:shadow-teal-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 overflow-hidden"
+          >
             <div className="absolute inset-0 bg-linear-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <span className="relative flex items-center gap-2">
               <Search className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
               Start Searching
             </span>
-          </button>
-          <button className="px-8 py-4 bg-white/5 backdrop-blur-xl border-2 border-white/20 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-teal-400/40 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+          </Link>
+          <Link
+            href={"/add"}
+            className="px-8 py-4 bg-white/5 backdrop-blur-xl border-2 border-white/20 text-white font-semibold rounded-2xl hover:bg-white/10 hover:border-teal-400/40 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+          >
             Post Your Listing
-          </button>
+          </Link>
         </div>
 
         {/* Elegant Stats Section */}
