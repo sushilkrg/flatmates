@@ -7,7 +7,7 @@ import { setFilters } from "@/redux/slices/filterSlice";
 import api from "@/utils/axiosClient";
 
 const SearchSection = () => {
-  const cityNames = ["Noida", "Gurgaon", "Chennai", "Bangalore", "Hyderabad"];
+  const cityNames = ["Noida", "Gurugram", "Pune", "Bangalore", "Hyderabad"];
   const [location, setLocation] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();

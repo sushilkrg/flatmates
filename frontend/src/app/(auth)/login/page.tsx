@@ -2,6 +2,7 @@
 import { setUser } from "@/redux/slices/authSlice";
 import { store } from "@/redux/store";
 import api from "@/utils/axiosClient";
+import { setAccessToken } from "@/utils/token";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -27,10 +28,11 @@ const Login = () => {
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
-      dispatch(setUser(result.data));
+      setAccessToken(result.data.accessToken);
+      dispatch(setUser(result.data.user));
       router.push("/search");
     } catch (error: any) {
       toast.error(error?.response?.data?.error);

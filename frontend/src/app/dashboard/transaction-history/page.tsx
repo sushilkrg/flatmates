@@ -13,9 +13,7 @@ const Transactions = () => {
     async function getTransactionHistory() {
       try {
         setLoading(true);
-        const res = await api.get(`/transaction/my-transactions`, {
-          withCredentials: true,
-        });
+        const res = await api.get(`/transaction/my-transactions`);
         setTransactionData(res?.data);
       } catch (error: any) {
         console.error("Transaction fetch error:", error);

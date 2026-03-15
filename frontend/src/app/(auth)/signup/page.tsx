@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { setAccessToken } from "@/utils/token";
 
 const Register = () => {
   const [fullName, setFullName] = useState("");
@@ -31,9 +32,10 @@ const Register = () => {
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
-      dispatch(setUser(result.data));
+      setAccessToken(result.data.accessToken);
+      dispatch(setUser(result.data.user));
       toast.success("User created successfully");
       router.push("/search");
     } catch (error: any) {

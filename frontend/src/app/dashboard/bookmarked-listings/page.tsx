@@ -1,7 +1,6 @@
 "use client";
 import ListingCard from "@/components/ListingCard";
 import api from "@/utils/axiosClient";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -22,7 +21,6 @@ const BookmarkedListingsPage = () => {
       await api.patch(
         `/listing/bookmark/${listingId}`,
         {},
-        { withCredentials: true }
       );
 
       toast.success("Listing unbookmarked", {
@@ -47,9 +45,7 @@ const BookmarkedListingsPage = () => {
     const getMySavedListings = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`/api/v1/listing/bookmarks`, {
-          withCredentials: true,
-        });
+        const res = await api.get(`listing/bookmarks`);
 
         if (!res) throw new Error("Request failed");
 
