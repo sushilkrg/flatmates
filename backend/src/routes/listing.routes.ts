@@ -8,16 +8,16 @@ import {
   getListingDetails,
   getMyListings,
 } from "../controllers/listing.controller";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
+import { protectRoute } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
 router.get("/details/:id", getListingDetails);
-router.post("/add", isAuthenticated, addListing);
-router.patch("/bookmark/:listingId", isAuthenticated, toggleBookmark );
-router.get("/bookmarks", isAuthenticated, getBookmarkedListings);
-router.delete("/:id", isAuthenticated, deleteListing);
-router.get("/mylistings", isAuthenticated, getMyListings);
+router.post("/add", protectRoute, addListing);
+router.patch("/bookmark/:listingId", protectRoute, toggleBookmark );
+router.get("/bookmarks", protectRoute, getBookmarkedListings);
+router.delete("/:id", protectRoute, deleteListing);
+router.get("/mylistings", protectRoute, getMyListings);
 router.get("/filter", getFilteredListings);
 
 export default router;

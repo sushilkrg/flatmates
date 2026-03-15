@@ -10,6 +10,7 @@ export interface IUser extends Document {
   myBookmarkedListings?: Types.ObjectId[];
   myTransactions?: Types.ObjectId[];
   role: UserRole;
+  refreshToken?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,8 +33,11 @@ const userSchema = new Schema<IUser>(
       default: "user",
       required: true,
     },
+    refreshToken: {
+      type: String,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = model<IUser>("User", userSchema);

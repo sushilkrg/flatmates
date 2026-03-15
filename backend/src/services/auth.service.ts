@@ -1,5 +1,10 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/generateToken";
 
 export const signupService = async (
   fullName: string,
@@ -25,15 +30,28 @@ export const signupService = async (
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  const newUser = new User({
+  const user = new User({
     fullName,
     email,
     password: hashedPassword,
   });
 
-  await newUser.save();
+  await user.save();
 
-  return newUser;
+  const accessToken = generateAccessToken({
+    userId: user._id.toString(),
+    role: user.role,
+  });
+
+  const refreshToken = generateRefreshToken({
+    userId: user._id.toString(),
+    role: user.role,
+  });
+
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  return { user, accessToken, refreshToken };
 };
 
 export const loginService = async (email: string, password: string) => {
@@ -49,9 +67,50 @@ export const loginService = async (email: string, password: string) => {
     throw new Error("Invalid email or password");
   }
 
-  return user;
+  const accessToken = generateAccessToken({
+    userId: user._id.toString(),
+    role: user.role,
+  });
+
+  const refreshToken = generateRefreshToken({
+    userId: user._id.toString(),
+    role: user.role,
+  });
+
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  return { user, accessToken, refreshToken };
 };
 
-export const logoutService = async () => {
-  return { message: "User logout successfully" };
+export const logoutService = async (refreshToken: string) => {
+  const user = await User.findOne({ refreshToken });
+
+  if (!user) {
+    return;
+  }
+
+  // Remove refresh token from database
+  user.refreshToken = undefined;
+  await user.save();
+};
+
+export const refreshAccessTokenService = async (refreshToken: string) => {
+  const decoded = jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET as string,
+  ) as any;
+
+  const user = await User.findById(decoded.userId);
+
+  if (!user || user.refreshToken !== refreshToken) {
+    throw new Error("Invalid refresh token");
+  }
+
+  const newAccessToken = generateAccessToken({
+    userId: user._id.toString(),
+    role: user.role,
+  });
+
+  return newAccessToken;
 };
