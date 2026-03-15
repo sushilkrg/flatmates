@@ -3,11 +3,11 @@ import * as listingService from "../services/listing.service";
 
 export const getListingDetails = async (req: Request, res: Response) => {
   try {
-    const listing = await listingService.getListingDetailsService(
+    const listingDetails = await listingService.getListingDetailsService(
       req.params.id,
     );
 
-    res.status(200).json({ listing });
+    res.status(200).json({ listingDetails });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
