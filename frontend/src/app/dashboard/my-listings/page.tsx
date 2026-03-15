@@ -1,7 +1,6 @@
 "use client";
 import ListingCard from "@/components/ListingCard";
 import api from "@/utils/axiosClient";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -23,9 +22,7 @@ const MyListingsPage = () => {
     setMyListings((prev) => prev.filter((l: any) => l._id !== id));
 
     try {
-      const res = await axios.delete(`/api/v1/listing/${id}`, {
-        withCredentials: true,
-      });
+      const res = await api.delete(`/listing/${id}`);
 
       toast.success(res.data.message || "Listing deleted successfully", {
         id: loadingToast,
