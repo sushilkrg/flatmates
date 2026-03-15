@@ -10,7 +10,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
     const { listingId, amount } = req.body;
 
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const session = await transactionService.createCheckoutSessionService(
       listingId,
@@ -61,7 +61,7 @@ export const stripeWebhook = async (req: Request, res: Response) => {
 
 export const getMyTransactions = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const transactions =
       await transactionService.getMyTransactionsService(userId);
