@@ -1,12 +1,12 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/isAuthenticated";
 import {
   createCheckoutSession,
   getMyTransactions,
 } from "../controllers/transaction.controller";
+import { protectRoute } from "../middlewares/auth.middleware";
 const router = express.Router();
 
-router.post("/create-checkout-session", isAuthenticated, createCheckoutSession);
-router.get("/my-transactions", isAuthenticated, getMyTransactions);
+router.post("/create-checkout-session", protectRoute, createCheckoutSession);
+router.get("/my-transactions", protectRoute, getMyTransactions);
 
 export default router;
