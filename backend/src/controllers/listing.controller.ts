@@ -15,7 +15,7 @@ export const getListingDetails = async (req: Request, res: Response) => {
 
 export const addListing = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const newListing = await listingService.addListingService(req.body, userId);
 
@@ -30,7 +30,7 @@ export const addListing = async (req: Request, res: Response) => {
 
 export const toggleBookmark = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const result = await listingService.toggleBookmarkService(
       req.params.listingId,
@@ -50,7 +50,7 @@ export const toggleBookmark = async (req: Request, res: Response) => {
 
 export const getBookmarkedListings = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const listings = await listingService.getBookmarkedListingsService(userId);
 
@@ -62,7 +62,7 @@ export const getBookmarkedListings = async (req: Request, res: Response) => {
 
 export const deleteListing = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const listing = await listingService.deleteListingService(
       req.params.id,
@@ -80,7 +80,7 @@ export const deleteListing = async (req: Request, res: Response) => {
 
 export const getMyListings = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user._id.toString();
+    const userId = (req as any).user.userId.toString();
 
     const listings = await listingService.getMyListingsService(userId);
 
