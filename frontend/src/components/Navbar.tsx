@@ -19,6 +19,13 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // fixes hydration error
+  // const [mounted, setMounted] = useState(false);
+
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,15 +41,13 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // if (!mounted) return null;
+
   async function handleLogout() {
     const loadingToast = toast.loading("Logging out...");
 
     try {
-      const res = await api.post(
-        `/auth/logout`,
-        {},
-        { withCredentials: true }
-      );
+      const res = await api.post(`/auth/logout`, {}, { withCredentials: true });
 
       dispatch(clearUser());
       setDropdownOpen(false);

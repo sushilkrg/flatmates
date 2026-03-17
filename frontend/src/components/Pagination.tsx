@@ -59,7 +59,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!hasPrevPage}
-        className={`px-4 py-2 rounded-lg font-medium transition-all${
+        className={`px-4 py-2 rounded-lg font-medium transition-all ${
           hasPrevPage
             ? "bg-gray-700 text-white hover:bg-gray-600 cursor-pointer"
             : "bg-gray-800 text-gray-500 cursor-not-allowed"
