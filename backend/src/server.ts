@@ -8,10 +8,11 @@ import authRoutes from "./routes/auth.routes";
 import listingRoutes from "./routes/listing.routes";
 import transactionRoutes from "./routes/transaction.routes";
 import healthRoutes from "./routes/health.routes";
+import adminRoutes from "./routes/admin.routes";
 import connectDB from "./config/db";
 import { stripeWebhook } from "./controllers/transaction.controller";
 import { apiLimiter } from "./middlewares/rateLimiter";
-// import { apiLimiter } from "./middlewares/rateLimiter";
+
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -45,6 +46,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/listing", listingRoutes);
 app.use("/api/v1/transaction", transactionRoutes);
 app.use("/api/v1/health", healthRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI as string;
