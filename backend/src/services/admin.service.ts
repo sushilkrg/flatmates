@@ -1,6 +1,7 @@
 import User from "../models/User";
 import Listing from "../models/Listing";
 import Transaction from "../models/Transaction";
+import { redis } from "../config/redis";
 
 export const getAllUsersService = async (page: number, limit: number) => {
   const skip = (page - 1) * limit;
@@ -47,6 +48,15 @@ export const getAllListingsService = async (page: number, limit: number) => {
 
 export const deleteListingService = async (listingId: string) => {
   const deletedListing = await Listing.findByIdAndDelete(listingId);
+
+  if (!deletedListing) {
+    throw new Error("Listing not found");
+  }
+
+  // invalidate cache
+  const keys = await redis.keys("search:*");
+  await Promise.all(keys.map((key) => redis.del(key)));
+
   return deletedListing;
 };
 
