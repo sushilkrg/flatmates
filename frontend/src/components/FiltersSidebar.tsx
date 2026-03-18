@@ -29,10 +29,10 @@ export default function FiltersSidebar() {
 
       // Add filters only if they have values
       if (filters.location) {
-        params.append("location", filters.location);
+        params.append("location", filters.location.toLowerCase());
       }
       if (filters.cityName) {
-        params.append("cityName", filters.cityName);
+        params.append("cityName", filters.cityName.toLowerCase());
       }
       if (filters.rent !== null && filters.rent !== undefined) {
         params.append("rent", filters.rent.toString());

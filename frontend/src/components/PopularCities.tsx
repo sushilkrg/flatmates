@@ -85,9 +85,9 @@ const PopularCities = () => {
       params.append("page", "1"); // Reset to page 1 on new search
       params.append("limit", "15");
 
-      params.append("location", value.trim());
+      params.append("location", value.trim().toLowerCase());
 
-      const res = await api.get(`/listing/filter?${params.toString()}`);
+      const res = await api.get(`/listing/search?${params.toString()}`);
 
       if (!res || !res.data) throw new Error("Request failed");
 
