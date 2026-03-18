@@ -44,7 +44,7 @@ export default function FiltersSidebar() {
         params.append("lookingForGender", filters.lookingForGender);
       }
 
-      const url = `/listing/filter?${params.toString()}`;
+      const url = `/listing/search?${params.toString()}`;
 
       const res = await api.get(url);
       if (!res || !res.data) throw new Error("Request failed");

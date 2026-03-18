@@ -4,7 +4,7 @@ import {
   toggleBookmark ,
   deleteListing,
   getBookmarkedListings,
-  getFilteredListings,
+  getSearchedListings,
   getListingDetails,
   getMyListings,
 } from "../controllers/listing.controller";
@@ -18,6 +18,6 @@ router.patch("/bookmark/:listingId", protectRoute, toggleBookmark );
 router.get("/bookmarks", protectRoute, getBookmarkedListings);
 router.delete("/:id", protectRoute, deleteListing);
 router.get("/mylistings", protectRoute, getMyListings);
-router.get("/filter", getFilteredListings);
+router.get("/search", getSearchedListings);
 
 export default router;

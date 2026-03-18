@@ -54,7 +54,7 @@ export default function SearchContent() {
         params.append("lookingForGender", filters.lookingForGender);
       }
 
-      const response = await api.get(`/listing/filter?${params.toString()}`);
+      const response = await api.get(`/listing/search?${params.toString()}`);
 
       dispatch(
         setListings({

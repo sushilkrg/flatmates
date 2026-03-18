@@ -90,9 +90,9 @@ export const getMyListings = async (req: Request, res: Response) => {
   }
 };
 
-export const getFilteredListings = async (req: Request, res: Response) => {
+export const getSearchedListings = async (req: Request, res: Response) => {
   try {
-    const result = await listingService.getFilteredListingsService(req.query);
+    const result = await listingService.getSearchedListingsService(req.query);
 
     res.status(200).json({
       success: true,
