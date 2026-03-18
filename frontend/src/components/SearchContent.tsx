@@ -39,10 +39,10 @@ export default function SearchContent() {
       params.append("limit", "15");
 
       if (filters.location) {
-        params.append("location", filters.location);
+        params.append("location", filters.location.toLowerCase());
       }
       if (filters.cityName) {
-        params.append("cityName", filters.cityName);
+        params.append("cityName", filters.cityName.toLowerCase());
       }
       if (filters.rent !== null && filters.rent !== undefined) {
         params.append("rent", filters.rent.toString());

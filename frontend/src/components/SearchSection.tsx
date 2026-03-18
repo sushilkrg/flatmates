@@ -26,7 +26,7 @@ const SearchSection = () => {
       params.append("page", "1"); // Reset to page 1 on new search
       params.append("limit", "15");
 
-      params.append("location", location.trim());
+      params.append("location", location.trim().toLowerCase());
 
       const res = await api.get(`/listing/search?${params.toString()}`);
 
