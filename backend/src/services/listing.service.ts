@@ -157,7 +157,7 @@ export const getMyListingsService = async (userId: string) => {
   return user.myListings || [];
 };
 
-export const getFilteredListingsService = async (query: any) => {
+export const getSearchedListingsService = async (query: any) => {
   const {
     location,
     cityName,

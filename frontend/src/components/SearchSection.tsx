@@ -28,7 +28,7 @@ const SearchSection = () => {
 
       params.append("location", location.trim());
 
-      const res = await api.get(`/listing/filter?${params.toString()}`);
+      const res = await api.get(`/listing/search?${params.toString()}`);
 
       if (!res || !res.data) throw new Error("Request failed");
 
