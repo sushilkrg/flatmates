@@ -1,13 +1,39 @@
 import { v2 as cloudinary } from "cloudinary";
 import Listing from "../models/Listing";
 import User from "../models/User";
+import { redis } from "../config/redis";
+
+type SearchResult = {
+  listings: any[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalListings: number;
+    limit: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+  };
+};
 
 export const getListingDetailsService = async (listingId: string) => {
+
+  const cacheKey = `listing-details:${JSON.stringify(listingId)}`;
+
+  //  Check Redis
+  const cachedData = await redis.get(cacheKey);
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const listingDetails = await Listing.findById(listingId);
 
   if (!listingDetails) {
     throw new Error("Listing not found");
   }
+
+  //  Store in Redis (TTL = 5 min)
+  await redis.set(cacheKey, listingDetails, { ex: 300 });
 
   return listingDetails;
 };
@@ -70,6 +96,10 @@ export const addListingService = async (data: any, userId: string) => {
     { _id: userId },
     { $push: { myListings: newListing._id } },
   );
+
+  // invalidate cache
+  const keys = await redis.keys("search:*");
+  await Promise.all(keys.map((key) => redis.del(key)));
 
   return newListing;
 };
@@ -141,6 +171,10 @@ export const deleteListingService = async (
 
   await Listing.findByIdAndDelete(listingId);
 
+  // invalidate cache
+  const keys = await redis.keys("search:*");
+  await Promise.all(keys.map((key) => redis.del(key)));
+
   return listing;
 };
 
@@ -158,6 +192,21 @@ export const getMyListingsService = async (userId: string) => {
 };
 
 export const getSearchedListingsService = async (query: any) => {
+  const normalizedQuery = {
+    ...query,
+    page: parseInt(query.page) || 1,
+    limit: parseInt(query.limit) || 15,
+  };
+
+  const cacheKey = `search:${JSON.stringify(normalizedQuery)}`;
+
+  //  Check Redis
+  const cachedData = await redis.get<SearchResult>(cacheKey);
+
+  if (cachedData) {
+    return cachedData;
+  }
+
   const {
     location,
     cityName,
@@ -250,7 +299,7 @@ export const getSearchedListingsService = async (query: any) => {
 
   const totalPages = Math.ceil(totalListings / limit);
 
-  return {
+  const result = {
     listings,
     pagination: {
       currentPage: page,
@@ -261,4 +310,9 @@ export const getSearchedListingsService = async (query: any) => {
       hasPrevPage: page > 1,
     },
   };
+
+  //  Store in Redis (TTL = 5 min)
+  await redis.set(cacheKey, result, { ex: 300 });
+
+  return result;
 };
